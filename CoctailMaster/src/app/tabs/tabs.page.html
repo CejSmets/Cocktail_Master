@@ -1,0 +1,20 @@
+<ion-tabs #tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="virtualBar" (click)="handleTabClick($event)">
+      <ion-icon src="../../assets/icon/bar.svg"></ion-icon>
+      <ion-label *ngIf="this.getSelectedTab('virtualBar')">Liquor Cabinet</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="home" (click)="handleTabClick($event)">
+      <ion-icon src="../../assets/icon/cocktail-glass.svg"></ion-icon>
+      <ion-label *ngIf="this.getSelectedTab('home')">Recipes</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="shoppinglist" (click)="handleTabClick($event)">
+      <ion-icon name="pricetags-outline"></ion-icon>
+      <ion-label *ngIf="this.getSelectedTab('shoppinglist')">Shopping list</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

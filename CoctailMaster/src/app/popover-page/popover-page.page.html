@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Select a filter
+    </ion-list-header>
+
+    <ion-item lines="none">
+      <ion-label>
+        Alcohol content
+      </ion-label>
+      <ion-select style="--background: red;" (ionChange)="setFilter($event)" ok-text="Apply">
+        <ion-select-option value="alcoholic">
+          Alcoholic
+        </ion-select-option>
+        <ion-select-option value="nonalcoholic">
+          Non-alcoholic
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Category
+      </ion-label>
+      <ion-select (ionChange)="this.setFilter($event)" ok-text="Apply">
+        <ion-select-option *ngFor="let category of categories" [value]="category.toLowerCase()">
+          {{category}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-button class="ion-padding-horizontal" (click)="dismissPopover('none')" color="base">Reset filters</ion-button>
+</ion-content>

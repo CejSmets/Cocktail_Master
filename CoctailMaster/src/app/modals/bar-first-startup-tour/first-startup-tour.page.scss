@@ -1,0 +1,33 @@
+ion-fab-button {
+  --background: rgba(234, 125, 125)
+}
+
+.header {
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-base);
+  position: absolute;
+  top: 25%;
+  width: 100%;
+}
+
+.rotate90 {
+  transform: rotate(90deg);
+}
+
+.fab-tooltip-wrapper {
+  position: absolute;
+  bottom: 0;
+  --background: var(--ion-color-base);
+  width: 80%;
+}
+
+.search-tooltip-wrapper {
+  position: absolute;
+  top: 7.5%;
+  --background: var(--ion-color-base);
+  width: 100%;
+}
+
+.fab-tooltip-text {
+  max-width: 80%
+}

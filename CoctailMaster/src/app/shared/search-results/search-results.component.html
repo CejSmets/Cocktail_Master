@@ -1,0 +1,10 @@
+<ion-list class="ion-padding" lines="none">
+  <ion-item style="color: var(--ion-color-primary)" *ngFor="let ingredient of searchResult">
+    <ion-icon class="ion-no-margin" (click)="addIngredient(ingredient)" slot="start" name="add"
+              style="color: var(--ion-color-tertiary)"></ion-icon>
+    <ion-img slot="start" style="height: 50px" [src]="this.drinkService.getSource(ingredient)"></ion-img>
+    <ion-label>{{ingredient}}</ion-label>
+
+    <ion-icon style="color: var(--ion-color-base)" (click)="addToShoppingList(ingredient)" name="cart" size="large"></ion-icon>
+  </ion-item>
+</ion-list>

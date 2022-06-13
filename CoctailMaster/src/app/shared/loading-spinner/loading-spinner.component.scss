@@ -1,0 +1,12 @@
+.spin {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  height: 100%;
+  background: var(--ion-background-color);
+}
+
+.spinner {
+  align-self: center;
+  color: var(--ion-color-primary);
+}

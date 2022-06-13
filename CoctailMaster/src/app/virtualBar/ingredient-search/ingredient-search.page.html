@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">Recipes with selected ingredients</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-loading-spinner [isLoaded]="this.loaded">
+  </app-loading-spinner>
+
+  <ng-container *ngIf="this.loaded">
+    <ion-grid class="list" >
+      <ion-row>
+        <ion-col size="12">
+          <ion-item style="--background: var(--ion-color-tertiary); color: var(--ion-color-base)" lines="none"
+                    *ngIf="this.drinks.length === 0">
+            Oops! Looks like you got just a bit too crazy there.
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" size="12" size-xs="12" size-sm="12" size-md="6"
+                 *ngFor="let drink of this.drinks">
+          <app-drink-item [drink]="drink">
+          </app-drink-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>

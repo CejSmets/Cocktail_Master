@@ -1,0 +1,60 @@
+<ion-card class="card">
+  <ion-card-header>
+    <ion-card-title>{{drink.name}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content style="display: flex; vertical-align: bottom">
+
+    <ion-grid>
+
+      <ion-row (click)="modalService.presentModal(drink.id)">
+        <ion-col>
+          <div class="tag-container">
+            <p class="tag-banner">
+              <ion-card-subtitle [innerHTML]="drink.tags" style="color: white;"></ion-card-subtitle>
+            </p>
+            <ion-img [src]=drink.thumbnail></ion-img>
+          </div>
+        </ion-col>
+
+        <ion-col>
+          <div>
+            <p class="instructions-container">{{drink.instructions}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top: 1rem;">
+        <ion-col size="4">
+          <div class="quantity-button">
+            <div class="quantity-indicator-label">{{drinkService.checkIngredients(drink, true)}}</div>
+            <ion-button class="owned-button" [routerLink]="['compingredients', true, drink.id]">Owned
+            </ion-button>
+          </div>
+        </ion-col>
+
+        <ion-col size="4">
+          <div class="quantity-button">
+            <div class="quantity-indicator-label">{{drinkService.checkIngredients(drink, false)}}</div>
+            <ion-button class="missing-button" [routerLink]="['compingredients', false, drink.id]">
+              Missing
+            </ion-button>
+          </div>
+        </ion-col>
+
+        <ion-col style="text-align: right; vertical-align: center; justify-content: right !important;">
+          <ion-item style="--background: none;" lines="none">
+            <button class="ion-no-margin ion-no-padding fav-button" slot="end"
+                    (click)="drinkService.favouriteDrink(drink)">
+              <ion-icon *ngIf="!drinkService.checkFavourited(drink)" style="font-size: 40px" icon="heart"
+                        color="medium"></ion-icon>
+              <ion-icon *ngIf="drinkService.checkFavourited(drink)" style="font-size: 40px" icon="heart"
+                        color="danger"></ion-icon>
+            </button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+  </ion-card-content>
+</ion-card>

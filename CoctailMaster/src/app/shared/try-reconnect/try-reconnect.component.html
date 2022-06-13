@@ -1,0 +1,12 @@
+<ng-container *ngIf="!connected && loaded">
+  <div class="outerWrapper">
+    <div style="align-self: center;">
+      <ion-text color="primary">
+        Looks like you got disconnected!
+      </ion-text>
+      <ion-button (click)="onReconnect()" style="--background: var(--ion-color-tertiary); --color: var(--ion-color-base)">
+        Try to reconnect
+      </ion-button>
+    </div>
+  </div>
+</ng-container>

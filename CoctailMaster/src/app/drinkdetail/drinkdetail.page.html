@@ -1,0 +1,9 @@
+<ion-content class="ion-padding" style="height: 100%; vertical-align: center">
+  <app-loading-spinner [isLoaded]="this.isLoaded">
+
+  </app-loading-spinner>
+  <app-drink-detail *ngFor="let drink of drinks" [drink]="drink">
+
+  </app-drink-detail>
+</ion-content>
+

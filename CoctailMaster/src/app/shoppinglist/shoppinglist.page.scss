@@ -1,0 +1,24 @@
+.add-shopping-item {
+  width: 90%;
+  border: 1px solid var(--ion-color-tertiary);
+  margin: auto;
+  border-radius: 3px;
+  display: flex;
+}
+
+ion-button.add-button {
+  --border-radius: 100vw;
+  --background: none;
+  --color: var(--ion-color-base);
+  --box-shadow: none;
+  --ripple-color: rgba(240, 128, 128, 0.8);
+}
+
+.item-container {
+  width: 95%;
+  margin: auto;
+}
+
+ion-list-header {
+  font-size: 2em;
+}

@@ -1,0 +1,27 @@
+.detail-item {
+  padding: 10px 0;
+}
+
+.header-image-wrapper {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  color: black;
+  border-radius: 10%;
+  overflow: hidden;
+}
+
+.header-tags {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3)
+}
+
+.wrapper {
+  position: relative;
+  text-align: center;
+  padding-bottom: 10px;
+  --background: var(--ion-background-color);
+}

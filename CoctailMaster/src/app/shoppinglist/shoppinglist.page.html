@@ -1,0 +1,29 @@
+<ion-content [fullscreen]="true">
+
+  <ion-list lines="none" style="color: var(--ion-color-primary)">
+    <ion-list-header class="ion-padding" style="color: var(--ion-color-primary)">
+      My shopping list
+    </ion-list-header>
+
+  <div>
+    <div class="add-shopping-item">
+      <ion-input [(ngModel)]="itemInput" autocapitalize="words" placeholder="Add to your shopping list"></ion-input>
+      <ion-button (click)="addShoppingItem()" class="add-button">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+      <ion-reorder-group (ionItemReorder)="onItemReorder($event)" disabled="false">
+        <ion-item class="item-container" *ngFor="let item of this.shoppingService.shoppingList">
+          <ion-reorder slot="start">
+            <ion-icon color="base" name="repeat"></ion-icon>
+          </ion-reorder>
+          <ion-label style="color: var(--ion-color-primary)" slot="start">{{item.text}}</ion-label>
+          <ion-icon color="tertiary" slot="end"
+                    src="../../assets/icon/bar.svg" *ngIf="item.isIngredient"
+                    (click)="addShoppingItemToBar(item)"></ion-icon>
+          <ion-icon color="tertiary" (click)="deleteShoppingItem(item)" slot="end" name="trash"></ion-icon>
+        </ion-item>
+      </ion-reorder-group>
+  </ion-list>
+</ion-content>

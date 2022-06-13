@@ -1,0 +1,7 @@
+{
+  "name": "CoctailMaster",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

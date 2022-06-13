@@ -1,0 +1,118 @@
+<ion-content [fullscreen]="true" style="position: relative;">
+  <div *ngIf="this.toggledIngredients.length > 0" slot="fixed"
+       style="height: 70px; position: absolute; top: 0; left: 0; right: 0;">
+    <!--Options for selected items-->
+    <ion-item style="--background: var(--ion-color-base); color:var(--ion-color-primary);">
+      <ion-icon (click)="clearSelection()" slot="start" size="large" name="close-outline"
+                style="color:var(--ion-color-tertiary);"></ion-icon>
+      <ion-text>{{this.getSelected()}}</ion-text>
+      <ion-icon (click)="addToShoppingList()" slot="end" size="large" name="cart"
+                style="color:var(--ion-color-tertiary);"></ion-icon>
+      <ion-icon (click)="removeFromBar()" slot="end" size="large" name="trash"
+                style="color:var(--ion-color-tertiary);"></ion-icon>
+    </ion-item>
+  </div>
+
+  <!--Searchbar-->
+  <ion-searchbar #searchBar style="--icon-color: var(--ion-color-tertiary); --placeholder-color: var(--ion-color-primary);
+                    --color: var(--ion-color-primary); width: 100%;"
+                 enterkeyhint="search" debounce="500"
+                 (ionChange)="handleSearch($event)" showCancelButton="never"
+                 (ionClear)="clearSearch()"></ion-searchbar>
+
+  <!--Search results-->
+  <app-search-results *ngIf="this.searchValue.length > 0" [searchResult]="this.searchResults">
+
+  </app-search-results>
+
+  <!--Search by ingredient FAB-->
+  <ion-fab *ngIf="this.toggledIngredients.length > 0 && this.toggledIngredients.length <= 3" vertical="bottom"
+           horizontal='end' slot='fixed'>
+    <ion-fab-button [routerLink]="['ingredient-search', params]">
+      <ion-icon name='search'></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!--Loading spinner-->
+  <app-loading-spinner [isLoaded]="loaded">
+
+  </app-loading-spinner>
+
+  <!--Reconnect button-->
+  <app-try-reconnect [loaded]="this.loaded" [connected]="this.connectionService.connected" (reconnect)="tryReconnect()">
+
+  </app-try-reconnect>
+
+  <!--Main page-->
+  <ng-container *ngIf="(this.searchValue === undefined || this.searchValue.length === 0) && this.loaded &&
+  this.connectionService.connected">
+    <!--Alocholic ingredients-->
+    <ion-grid class="ion-no-margin ion-no-padding">
+      <ion-row class="ion-margin-top">
+        <ion-text class="category-title ion-padding">Alcoholic ingredients
+        </ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-item style="width: 100%; --background: var(--ion-color-tertiary); color: var(--ion-color-base)"
+                  lines="none" *ngIf="alcoholicList.length === 0">No ingredients in this
+          category...
+        </ion-item>
+        <ion-col style="padding:10px; display: flex;" size="4" size-sm="3" size-md="2" size-lg="2" size-xl="1"
+                 *ngFor="let ingredient of alcoholicList"
+                 (click)="toggleIngredient(ingredient)" #container>
+          <div class="ingredient" [ngClass]="{ 'selected': this.toggledIngredients.includes(ingredient) }">
+            <ion-img [src]="drinkService.getSource(ingredient)"></ion-img>
+            <p style="font-size: 0.8em;">{{ingredient}}</p>
+          </div>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+    <!--Non-alcoholic ingredients-->
+    <ion-grid class="ion-no-margin ion-no-padding">
+      <ion-row class="ion-margin-top">
+        <ion-text class="ion-padding category-title" style="font-weight: bolder; font-size: x-large">Non-alcoholic
+          ingredients
+        </ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-item style="width: 100%; --background: var(--ion-color-tertiary); color: var(--ion-color-base)"
+                  *ngIf="otherList.length === 0">No ingredients in this category...
+        </ion-item>
+        <ion-col style="padding:10px; display: flex;" size="4" size-sm="3" size-md="2" size-lg="2" size-xl="1"
+                 *ngFor="let ingredient of otherList"
+                 (click)="toggleIngredient(ingredient)">
+          <div class="ingredient" [ngClass]="{ 'selected': this.toggledIngredients.includes(ingredient) }">
+            <ion-img [src]="drinkService.getSource(ingredient)"></ion-img>
+            <p style="font-size: 0.8em;">{{ingredient}}</p>
+          </div>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+
+    <!--Fruits-->
+    <ion-grid class="ion-no-margin ion-no-padding">
+      <ion-row class="ion-margin-top">
+        <ion-text class="ion-padding category-title" style="font-weight: bolder; font-size: x-large">Fruits</ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-item style="width: 100%; --background: var(--ion-color-tertiary); color: var(--ion-color-base)"
+                  lines="none" class="no-items-text" *ngIf="fruitList.length === 0">No ingredients in
+          this category...
+        </ion-item>
+        <ion-col style="padding:10px; display: flex;" size="4" size-sm="3" size-md="2" size-lg="2" size-xl="1"
+                 *ngFor="let ingredient of fruitList"
+                 (click)="toggleIngredient(ingredient)">
+          <div class="ingredient" [ngClass]="{ 'selected': this.toggledIngredients.includes(ingredient) }">
+            <ion-img [src]="drinkService.getSource(ingredient)"></ion-img>
+            <p style="font-size: 0.8em;">{{ingredient}}</p>
+          </div>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>

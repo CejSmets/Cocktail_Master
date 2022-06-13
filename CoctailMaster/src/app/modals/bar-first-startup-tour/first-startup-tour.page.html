@@ -1,0 +1,30 @@
+<ion-content style="position: relative;">
+  <ion-item class="search-tooltip-wrapper">
+    <ion-icon class="rotate90" color="primary" slot="end" name="arrow-undo"></ion-icon>
+    <ion-text class="ion-padding-vertical fab-tooltip-text" color="primary">
+      Search for ingredients and add them here!
+    </ion-text>
+  </ion-item>
+
+
+  <h2 class="ion-padding header">
+    This is your virtual cocktail cabinet! Here you can keep track of the ingredients you own.
+  </h2>
+
+  <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+    <ion-fab-button>
+      <ion-icon name='search'></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-item class="fab-tooltip-wrapper">
+    <ion-icon color="primary" slot="end" name="arrow-redo"></ion-icon>
+    <ion-text class="ion-padding-vertical fab-tooltip-text" color="primary">
+      Click the magnifying glass to find cocktails with up to 3 selected ingredients!
+    </ion-text>
+  </ion-item>
+</ion-content>
+<ion-button (click)="this.modalService.dismiss()"
+            style="--color: var(--ion-color-base); --background: var(--ion-color-tertiary); height: 4em">
+  Got it, stop wasting my time!
+</ion-button>

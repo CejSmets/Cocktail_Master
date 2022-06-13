@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-loading-spinner [isLoaded]="this.loaded">
+
+  </app-loading-spinner>
+
+
+  <!-----Can't use component because maximum call stack size exceeded----->
+  <ng-container *ngIf="!this.connectionService.connected && this.loaded">
+    <div class="outerWrapper">
+      <div style="align-self: center;">
+        <ion-text color="primary">
+          Looks like you got disconnected!
+        </ion-text>
+        <ion-button (click)="this.tryReconnect()" style="--background: var(--ion-color-tertiary); --color: var(--ion-color-base)">
+          Try to reconnect
+        </ion-button>
+      </div>
+    </div>
+  </ng-container>
+  <!--/>-->
+
+  <ng-container *ngIf="this.loaded && this.connectionService.connected">
+    <ion-grid *ngFor="let selectedDrink of drinkList" class="ion-no-margin ion-no-margin">
+      <ion-row class="ion-margin-top ion-margin-bottom ion-padding-bottom">
+        <ion-text class="ion-padding-horizontal"
+                  style="color: var(--ion-color-primary);font-weight: bolder; font-size: x-large">{{title}}</ion-text>
+      </ion-row>
+      <!--Shown if checking owned ingredients-->
+      <ion-row *ngIf="this.checkOwned">
+        <ion-item style="width: 100%; --background: var(--ion-color-tertiary); color: var(--ion-color-base)"
+                  lines="none" *ngIf="drinkService.getOwned(selectedDrink.ingredientList).length === 0">
+          As it turns out, nothing at all!
+        </ion-item>
+        <ion-col style="padding:10px; display: flex;" size="4" size-sm="3" size-md="2" size-lg="2" size-xl="1"
+                 *ngFor="let ingredient of drinkService.getOwned(selectedDrink.ingredientList)"
+                 (click)="toggleIngredient(ingredient)">
+          <div class="ingredient" [ngClass]="{ 'selected': this.toggledIngredients.includes(ingredient) }">
+            <ion-img [src]="drinkService.getSource(ingredient)"></ion-img>
+            <p style="font-size: 0.8em;">{{ingredient}}</p>
+          </div>
+        </ion-col>
+
+      </ion-row>
+      <!--Shown if checking unowned ingredients-->
+      <ion-row *ngIf="!this.checkOwned">
+        <ion-item style="width: 100%; --background: var(--ion-color-tertiary); color: var(--ion-color-base)"
+                  lines="none" *ngIf="drinkService.getNotOwned(selectedDrink.ingredientList).length === 0">
+          What are you waiting for? Get to mixing!
+        </ion-item>
+        <ion-col style="padding:10px; display: flex;" size="4" size-sm="3" size-md="2" size-lg="2" size-xl="1"
+                 *ngFor="let ingredient of drinkService.getNotOwned(selectedDrink.ingredientList)"
+                 (click)="toggleIngredient(ingredient)">
+          <div class="ingredient" [ngClass]="{ 'selected': this.toggledIngredients.includes(ingredient) }">
+            <ion-img [src]="drinkService.getSource(ingredient)"></ion-img>
+            <p style="font-size: 0.8em;">{{ingredient}}</p>
+          </div>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>
+<!--buttons-->
+<ng-container *ngIf="this.loaded && this.connectionService.connected">
+  <div style="display: flex;">
+    <ion-button *ngIf="!this.checkOwned" (click)="addToBar()" class="add-remove-button">Add to cabinet</ion-button>
+    <ion-button *ngIf="this.checkOwned" (click)="removeFromBar()" class="add-remove-button">Remove cabinet</ion-button>
+    <ion-button (click)="addToShoppingList()" class="shopping-button">Add to shopping list
+    </ion-button>
+  </div>
+</ng-container>

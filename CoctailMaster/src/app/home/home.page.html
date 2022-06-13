@@ -1,0 +1,89 @@
+<ion-content style="background: var(--ion-background-color)" [fullscreen]="true" forceOverscroll="true" #content>
+  <ion-segment class="list" value="infinite" swipe-gesture="true" (ionChange)="onSegmentChange($event)">
+    <ion-segment-button value="popular">
+      <ion-label>Popular</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="infinite">
+      <ion-label>Infinite Cocktails</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="favourites">
+      <ion-label>Favourites</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!--Loading spinner-->
+  <app-loading-spinner [isLoaded]="this.loaded">
+
+  </app-loading-spinner>
+
+  <!--Reconnect button-->
+  <app-try-reconnect [loaded]="this.loaded" [connected]="this.connectionService.connected" (reconnect)="tryReconnect()">
+
+  </app-try-reconnect>
+
+  <!--FAB-->
+  <ion-fab *ngIf="this.loaded && this.connectionService.connected" style="z-index: 100;" vertical="bottom"
+           horizontal="end" slot="fixed" #fabRef>
+    <ion-fab-button>
+      <ion-icon name="aperture"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list (click)="presentPopover($event)" *ngIf="selectedSegment === 'infinite'" side="start">
+      <ion-fab-button id="fab-filter">
+        <ion-icon style="color: white;" name="filter"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="top" (click)="scrollToTop()">
+      <ion-fab-button id="fab-btt">
+        <ion-icon style="color: white;" name="caret-up"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!--Lists-->
+  <ng-container *ngIf="this.loaded && this.connectionService.connected">
+    <!--Popular-->
+    <ion-grid class="list" *ngIf="this.selectedSegment === 'popular'">
+      <ion-row>
+        <ion-col class="ion-no-margin ion-no-padding" size="12" size-xs="12" size-sm="12" size-md="6"
+                 *ngFor="let drink of popularDrinksList">
+          <app-drink-item [drink]="drink">
+          </app-drink-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!--Infinite-->
+    <ion-grid class="list" *ngIf="selectedSegment === 'infinite'">
+      <ion-row>
+        <ion-col class="ion-no-margin ion-no-padding" size="12" size-xs="12" size-sm="12" size-md="6"
+                 *ngFor="let drink of infiniteDrinksList">
+          <app-drink-item [drink]="drink">
+          </app-drink-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-infinite-scroll style="background: var(--ion-background-color); --color: var(--ion-color-primary)"
+                         *ngIf="this.selectedSegment === 'infinite' && (this.filter === 'none' || this.filter === 'alcoholic')"
+                         threshold="10%"
+                         (ionInfinite)="(loadData($event))">
+      <ion-infinite-scroll-content class="infinite-scroll" loading-spinner="crescent" loading-text="">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <!--Favourites-->
+    <ion-grid class="list" *ngIf="this.selectedSegment === 'favourites'">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item style="--background: var(--ion-color-tertiary); color: var(--ion-color-base)" lines="none"
+                    *ngIf="this.drinkService.getFavourited().length === 0">
+            Nothing here yet. Tap the heart next to a cocktail to quickly find it back in this tab!
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-margin ion-no-padding" size="12" size-xs="12" size-sm="12" size-md="6"
+                 *ngFor="let drink of this.drinkService.getFavourited()">
+          <app-drink-item [drink]="drink">
+          </app-drink-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>

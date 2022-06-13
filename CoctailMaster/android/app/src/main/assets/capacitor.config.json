@@ -1,0 +1,6 @@
+{
+	"appId": "com.cocktailMasters.app",
+	"appName": "Cocktail Master",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

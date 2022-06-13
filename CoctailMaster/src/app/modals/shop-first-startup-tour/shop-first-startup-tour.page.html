@@ -1,0 +1,18 @@
+<ion-content style="position: relative;">
+  <ion-item class="search-tooltip-wrapper">
+    <ion-icon class="rotate90" color="primary" slot="end" name="arrow-redo"></ion-icon>
+    <ion-text class="ion-padding-vertical fab-tooltip-text" color="primary">
+      Type here to add custom items to the shopping list. Can't forget the detergent!
+    </ion-text>
+  </ion-item>
+
+
+  <h2 class="ion-padding header">
+    Ingredients added to your shopping list will appear here. You can add them from either of the other tabs.
+    The <ion-icon src="../../../assets/icon/bar.svg"></ion-icon> icon will let you add them from this list straight to your cabinet!
+  </h2>
+</ion-content>
+<ion-button (click)="this.modalService.dismiss()"
+            style="--color: var(--ion-color-base); --background: var(--ion-color-tertiary); height: 4em">
+  Enough with these already!
+</ion-button>
